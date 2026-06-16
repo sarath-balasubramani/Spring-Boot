@@ -16,4 +16,11 @@ public class EmployeeResponse {
     private UserRole userRole;
 
     private AddressDTO address;
+
+    public EmployeeResponse(Long empid, String firstName, String email) {
+    }
+
+    public EmployeeResponse() {
+
+    }
 }

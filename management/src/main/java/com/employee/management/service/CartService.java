@@ -8,9 +8,7 @@ import com.employee.management.repository.CartItemRepository;
 import com.employee.management.repository.EmployeeRepository;
 import com.employee.management.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -65,7 +63,7 @@ public class CartService {
     }
 
 
-    public boolean deleteIteemFromCart(String employeeId,Long productId) {
+    public boolean deleteItemFromCart(String employeeId,Long productId) {
         Optional<Product> productOpt=productRepository.findById(productId);
         Optional<Employee> employeeopt=employeeRepository.findById(Long.valueOf(employeeId));
         if(productOpt.isPresent()&&employeeopt.isPresent()){
@@ -80,5 +78,9 @@ public class CartService {
         return employeeRepository.findById(Long.valueOf(empId))
                 .map(cartItemRepository::findByEmployee)
                 .orElseGet(List::of);
+    }
+
+    public void clearCart(String employeeId) {
+        employeeRepository.findById(Long.valueOf(employeeId)).ifPresent(cartItemRepository::deleteByEmployee);
     }
 }
